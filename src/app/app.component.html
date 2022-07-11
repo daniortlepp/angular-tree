@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">Monte uma hierarquia de itens abaixo. Você pode mudar a posição de um node arrastando o mesmo para onde desejar.</div>
+  <tree-root #tree [nodes]="nodes" [options]="options" (activate)="onActivateNode($event)">
+    <ng-template #treeNodeTemplate let-node let-index="index">
+      <div class="tree-node-content">
+        <div>
+          <input (change)="checked( node, $event)" type="checkbox" id="check-{{node.data.id}}" [indeterminate]="node.data.indeterminate" [checked]="node.data.checked">
+          <span>{{node.data.name}}</span>
+        </div>
+        <div>
+          <button class="button btn btn-success" (click)="openModal(newNode, node)" title="Adicionar novo node"><i class="fa fa-plus"></i></button>
+          <button class="button btn btn-danger" (click)="deleteNode(node, tree)" title="Excluir node"><i class="fa fa-trash"></i></button>
+        </div>
+      </div>
+    </ng-template>
+  </tree-root>
+
+  <ng-template #newNode let-modal style="max-width: 500px;">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Novo node</h4>
+      <button type="button" class="close" aria-label="Close" id="closeButton" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <p>Qual nome do node que deseja inserir?</p>
+
+        <form [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col-md-12" >
+            <input type="text" formControlName="name" name="name" id="name" class="form-control" />
+          </div>
+        </div>  
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <button type="button" class="btn btn-primary" (click)="modal.close('save')">Inserir</button>
+          </div>
+        </div>
+        </form>
+      
+      </div>
+  </ng-template>
+</div>
